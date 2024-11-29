@@ -1,0 +1,31 @@
+# Исключение проекта QGIS
+*.qgz
+
+# Исключение файлов с расширением .geojson
+*.geojson
+
+# Исключение файлов Excel
+*.xls
+*.xlsx
+*.csv
+
+# Исключение env
+.env
+
+# Исключение файла с конкретным названием
+last_tender_id.txt
+
+# Общие исключения для Python/Django
+# Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtualenv
+env/
+venv/
+
+# Django
+*.sqlite3
+/media/
+
