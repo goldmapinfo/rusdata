@@ -1,13 +1,16 @@
 import csv
 import geojson
 
+# Устанавливаем новый предел для поля
+csv.field_size_limit(1000000)  # Например, 1 МБ (1000000 байт)
+
 # Функция для преобразования строки с координатами в список кортежей (широта, долгота)
 def parse_coordinates(coords_str):
     coords = coords_str.split()
     return [(float(coords[i+1]), float(coords[i])) for i in range(0, len(coords), 2)]
 
 # Пути к файлам
-input_file_path = 'test2.csv'  # Исходный CSV файл
+input_file_path = 'convert_opendata.csv'  # Исходный CSV файл
 output_file_path = 'output.geojson'  # Финальный результат в GeoJSON
 
 # Список для хранения данных
