@@ -7,7 +7,22 @@ csv.field_size_limit(1000000)  # Например, 1 МБ (1000000 байт)
 # Функция для преобразования строки с координатами в список кортежей (широта, долгота)
 def parse_coordinates(coords_str):
     coords = coords_str.split()
-    return [(float(coords[i+1]), float(coords[i])) for i in range(0, len(coords), 2)]
+    parsed_coords = []
+    
+    for i in range(0, len(coords), 2):
+        # Преобразуем координаты в числа
+        lat = float(coords[i+1])  # Широта (второе значение)
+        lon = float(coords[i])    # Долгота (первое значение)
+        
+        # Для долготы, если координаты находятся в западном полушарии, делаем долготу отрицательной
+        if lon > 0:  # Если долгота положительная, значит это восточное полушарие
+            lon = lon  # Восточное полушарие, оставляем как есть
+        else:  # Если долгота отрицательная, значит это западное полушарие
+            lon = lon  # Западное полушарие, сохраняем как есть
+        
+        parsed_coords.append((lat, lon))  # Добавляем пару (широта, долгота)
+    
+    return parsed_coords
 
 # Пути к файлам
 input_file_path = 'convert_opendata.csv'  # Исходный CSV файл
@@ -42,7 +57,7 @@ geojson_data = geojson.FeatureCollection(features)
 geojson_data["crs"] = {
     "type": "name",
     "properties": {
-        "name": "urn:ogc:def:crs:OGC:1.3:CRS84"  # Этот код будет соответствовать ГСК-2011, измените его при необходимости
+        "name": "EPSG:3856"  # Этот код будет соответствовать ГСК-2011, измените его при необходимости
     }
 }
 
